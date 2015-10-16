@@ -3,7 +3,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class CompanyB{
+public class CompanyA{
 	
    public static void main(String[] args){
 		
@@ -11,6 +11,7 @@ public class CompanyB{
 	try {
 			
 		ip = InetAddress.getLocalHost();
+		System.out.println("Current IP address : " + ip.getHostAddress());
 		
 		NetworkInterface network = NetworkInterface.getByInetAddress(ip);
 			
