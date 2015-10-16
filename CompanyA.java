@@ -3,37 +3,46 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class CompanyB{
+public class MultithreadingDemo 
+{
 	
-   public static void main(String[] args){
-		
-	InetAddress ip;
-	try {
+   public static void main(String args[]) throws Throwable  
+   {
+	   InetAddress ip;
+		try {
+				
+			ip = InetAddress.getLocalHost();
 			
-		ip = InetAddress.getLocalHost();
-		
-		NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+				
+			byte[] mac = network.getHardwareAddress();
+				
+			System.out.print("Current MAC address : ");
+				
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < mac.length; i++) {
+				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+			}
+			System.out.println(sb.toString());
+				
+		} catch (UnknownHostException e) {
 			
-		byte[] mac = network.getHardwareAddress();
+			e.printStackTrace();
 			
-		System.out.print("Current MAC address : ");
-			
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < mac.length; i++) {
-			sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+		} catch (SocketException e){
+				
+			e.printStackTrace();
+				
 		}
-		System.out.println(sb.toString());
-			
-	} catch (UnknownHostException e) {
-		
-		e.printStackTrace();
-		
-	} catch (SocketException e){
-			
-		e.printStackTrace();
-			
-	}
-	    
+      new MultithreadingDemo().myfunc();
    }
 
+   void myfunc() throws Throwable
+   {
+      for (int i=0; i<5; i++) {
+         System.out.println("thread "
+            +Thread.currentThread().getName()+" step "+i);
+         Thread.sleep(500);
+      }
+   }
 }
